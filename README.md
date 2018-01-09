@@ -1,4 +1,1 @@
-gobelin
-test
-
-zgzg
+Le projet de jeu de plateau issue du jeu de societe goblin.
