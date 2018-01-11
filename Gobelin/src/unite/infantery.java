@@ -1,4 +1,4 @@
-package unité;
+package unite;
 
 public  class infantery extends Unity {
     public infantery(char morale,int missile,int corp, int armure, int PM){

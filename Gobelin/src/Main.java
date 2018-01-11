@@ -1,3 +1,6 @@
+import Leader.*;
+import unite.*;
+
 import javax.swing.*;
 import java.io.IOException;
 import javax.swing.JFrame;
