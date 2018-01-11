@@ -1,11 +1,15 @@
 package unité;
 
-public abstract class Cavalerie extends Unity {
-    Cavalerie(){
+public  class Cavalerie extends Unity {
+    public Cavalerie(){
 
     }
 
-    void deplacement(){
+    public void deplacement(){
+
+    }
+    public void pillage(){
+        System.out.println("pillage");
 
     }
 }

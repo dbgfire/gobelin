@@ -1,6 +1,5 @@
 package unité;
-
-public abstract class Unity {
+abstract class Unity {
     private char morale;
     private int missile;
     private int corp;
@@ -9,8 +8,12 @@ public abstract class Unity {
 
     abstract void deplacement();
     abstract void pillage();
-    void attaquer(){}
-    void attaque_distance(){}
+    public void attaquer(){
+        System.out.println("attaque");
+    }
+    public void attaque_distance(){
+        System.out.println("attaque_distance");
+    }
 
 
 }

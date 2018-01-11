@@ -1,13 +1,15 @@
 package unité;
 
-public abstract class gobelin {
-    gobelin(){
+public  class gobelin extends Unity {
+    public gobelin(){
 
     }
-    void deplacement(){
+    public void deplacement(){
+        System.out.println("deplacement");
 
     }
-    void pillage(){
+    public void pillage(){
+        System.out.println("pillage");
 
     }
 }
