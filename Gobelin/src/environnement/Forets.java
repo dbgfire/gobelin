@@ -1,4 +1,5 @@
 package environnement;
+import unité.*;
 
 public class Forets {
     public void CoutPM(infantery i){

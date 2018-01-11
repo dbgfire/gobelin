@@ -1,4 +1,5 @@
 package environnement;
+import unité.*;
 
 public class Villages {
     public void CoutPM(Unity u){
