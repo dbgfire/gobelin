@@ -1,7 +1,7 @@
 package unité;
 
 public  class infantery extends Unity {
-    public infantery(){
+    public infantery(char morale,int missile,int corp, int armure, int PM){
 
     }
     void deplacement(){

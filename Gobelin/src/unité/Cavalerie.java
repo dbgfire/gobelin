@@ -1,7 +1,7 @@
 package unité;
 
 public  class Cavalerie extends Unity {
-    public Cavalerie(){
+    public Cavalerie(char morale,int missile,int corp, int armure, int PM){
 
     }
 

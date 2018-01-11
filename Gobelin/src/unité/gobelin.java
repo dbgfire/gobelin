@@ -1,7 +1,7 @@
 package unité;
 
 public  class gobelin extends Unity {
-    public gobelin(){
+    public gobelin(char morale,int missile,int corp, int armure, int PM){
 
     }
     public void deplacement(){
