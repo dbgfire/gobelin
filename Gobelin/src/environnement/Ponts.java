@@ -1,8 +1,7 @@
 package environnement;
+import unit�.*;
 
-import unité.*;
-
-
+//Classe de la zone Pont
 
 public class Ponts {
     public void CoutPM(infantery i){
@@ -10,5 +9,8 @@ public class Ponts {
     }
     public void CoutPM(Cavalerie c){
         c.PM = c.PM - 1/2;
+    }
+    public void CoutPM(gobelin g){
+        g.PM = g.PM - 1;
     }
 }
