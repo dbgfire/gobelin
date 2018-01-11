@@ -1,10 +1,7 @@
-<<<<<<< Updated upstream
 import javax.swing.*;
 import java.io.IOException;
-
-=======
 import javax.swing.JFrame;
->>>>>>> Stashed changes
+
 public class Main {
 
 
