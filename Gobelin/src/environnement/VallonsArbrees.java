@@ -1,7 +1,7 @@
 package environnement;
 
-public class Villes {
+public class VallonsArbrees {
     public void CoutPM(Unity u){
-        u.PM = u.PM - 1;
+        u.PM = u.PM - 2;
     }
 }
