@@ -16,7 +16,7 @@ public class leaderHumain extends Leader{
     }
     public void Cheval(boolean A){
         this.Monture=A;
-        if(this.Monture == true){                   //défini les PM disponnible si cheval ou non
+        if(this.Monture == true){                   //défini les PM disponnibles si cheval ou non
             this.PM=15;
         }else {
             this.PM=10;
