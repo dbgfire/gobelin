@@ -1,4 +1,8 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class hex
@@ -16,7 +20,7 @@ public class hex
 
     static int[][] board = new int[BSIZE][BSIZE];
     hex(){
-        h = 30;			// h = basic dimension: height (distance between two adj centresr aka size)
+        h = 40;			// h = basic dimension: height (distance between two adj centresr aka size)
         r = h/2;			// r = radius of inscribed circle
         s = (int) (h / 1.73205);	// s = (h/2)/cos(30)= (h/2) / (sqrt(3)/2) = h / sqrt(3)
         t = (int) (r / 1.73205);
@@ -28,7 +32,7 @@ public class hex
         board[1][0] = (int)'A';
     }
 
-    
+
 
     public static Polygon hex (int x0, int y0) {
 
@@ -86,14 +90,21 @@ public class hex
 
     static class Panneau extends JPanel
     {
+        private BufferedImage image;
         Panneau(){
-            setBackground(new Color(255, 147, 0, 255));
+            try {
+                image = ImageIO.read(new File("D:\\projet\\gobelin\\Gobelin\\src\\images\\map2.png"));
+                // ImageIO.read(new File("im.png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         public void paintComponent(Graphics g)
         {
             Graphics2D g2 = (Graphics2D)g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             super.paintComponent(g2);
+            g2.drawImage(image, 0, 0, null);
             for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
                     drawHex(i,j,g2);
