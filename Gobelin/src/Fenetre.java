@@ -14,7 +14,7 @@ public class Fenetre extends JFrame{
     JMenuItem test1 = new JMenuItem("Mouvement gobelin");
     JMenuItem test2 = new JMenuItem ("Combat gobelin");
     JMenuItem test3 = new JMenuItem("Mouvement humain");
-    JMenuItem test4 = new JMenuItem("Combat gobelin");
+    JMenuItem test4 = new JMenuItem("Combat humain");
     JMenuItem test5 = new JMenuItem("Changement de tour");
     JMenu test6 = new JMenu("Fin phase       ");
     JMenu test7 = new JMenu("menu");
