@@ -12,6 +12,8 @@ public class Main {
     public static void main(String[] args){
 
         menu me=new menu();//generation page d'acceuil
+        hex h=new hex();
+
         leaderHumain john = new leaderHumain("John Gordon",2,2,1,true);
         leaderHumain Robert = new leaderHumain("Rombert Keith",2,4,0,true);
         leaderHumain Thomas = new leaderHumain("Thomas Bruce",2,4,0,true);
@@ -26,7 +28,6 @@ public class Main {
        inf.deplacement();
         //cav.deplacement();
         //cav.attaquer();
-
         leaderGobelin Phinloc = new leaderGobelin("Phinloc",2,5,1,10);
         leaderGobelin Uglop = new leaderGobelin("Uglop",3,5,0,10);
         leaderGobelin Grinphar = new leaderGobelin("Uglop",3,3,0,10);
@@ -34,7 +35,6 @@ public class Main {
         leaderGobelin Argbarg = new leaderGobelin("Argbarg",2,3,1,10);
         leaderGobelin Marglush= new leaderGobelin("Marglush",1,8,1,10);
         leaderGobelin King = new leaderGobelin("King",1,12,2,10);
-
     }
 
 }

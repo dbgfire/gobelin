@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+
 
 public class menu extends JFrame {
     private JButton raidButton;
@@ -13,23 +15,26 @@ public class menu extends JFrame {
     private JButton tutorielButton;
 
     menu(){
+
         //nom fenetre
         this.setTitle("Gobelin le jeu");
         //taille fenetre
-        this.setSize(500, 400);
+        //this.setSize(500, 400);
         //position fenetre
         this.setLocationRelativeTo(null);
         //bouton quitter fenetre
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(principal);
         //redimensionnable
-        this.setResizable(false);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setUndecorated(true);
+        //this.setResizable(false);
         this.setVisible(true);
-
         quitterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"test");
+                System.exit(0);
+
             }
         });
 
@@ -37,12 +42,19 @@ public class menu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                principal.removeAll();
+                principal=new hex.Panneau();
+                setContentPane(principal);
+                principal.invalidate();
+                principal.revalidate();
+                principal.repaint();
             }
         });
         raidButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                JOptionPane.showMessageDialog(null,"test");
             }
         });
         campagneButton.addActionListener(new ActionListener() {
