@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 public class Main {
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
 
         menu me=new menu();//generation page d'acceuil
         hex h=new hex();
