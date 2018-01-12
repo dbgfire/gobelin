@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 public class Main {
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
 
         menu me=new menu();//generation page d'acceuil
         leaderHumain john = new leaderHumain("John Gordon",2,2,1,true);              //défini les caractéristiques du leader humain
@@ -26,6 +26,12 @@ public class Main {
        inf.deplacement();
         //cav.deplacement();
         //cav.attaquer();
+        //menu me=new menu();//generation page d'acceuil
+        try {
+            Fenetre fenetre = new Fenetre();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         leaderGobelin Phinloc = new leaderGobelin("Phinloc",2,5,1,10);              //défini les caractéristiques du leader gobelin
         leaderGobelin Uglop = new leaderGobelin("Uglop",3,5,0,10);
