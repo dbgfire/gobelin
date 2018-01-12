@@ -8,7 +8,7 @@ public class leaderHumain extends Leader{
         this.UniteMax = UniteMax;
         this.Morale = Morale;
         this.Monture=m;
-        if(this.Monture == true){    
+        if(this.Monture == true){
             this.PM=15;
         }else {
             this.PM=10;
