@@ -13,6 +13,16 @@ public class menu extends JFrame {
     private JPanel principal;
     private JPanel Menu;
     private JButton tutorielButton;
+    JMenuBar menuBar = new JMenuBar();
+
+
+    JMenuItem test1 = new JMenuItem("Mouvement gobelin");
+    JMenuItem test2 = new JMenuItem ("Combat gobelin");
+    JMenuItem test3 = new JMenuItem("Mouvement humain");
+    JMenuItem test4 = new JMenuItem("Combat gobelin");
+    JMenuItem test5 = new JMenuItem("Changement de tour");
+    JMenu test6 = new JMenu("Fin phase       ");
+    JMenu test7 = new JMenu("menu");
 
     menu(){
 
@@ -30,6 +40,21 @@ public class menu extends JFrame {
         this.setUndecorated(true);
         //this.setResizable(false);
         this.setVisible(true);
+        setJMenuBar(menuBar);
+
+        menuBar.setBackground(new Color(11,201,6));
+        test2.setBackground(new Color(11,201,6));
+        test3.setBackground(new Color(11,201,6));
+        test4.setBackground(new Color(11,201,6));
+        test5.setBackground(new Color(11,201,6));
+        test2.setBackground(new Color(11,201,6));
+
+        test1.setEnabled(false);
+        test2.setEnabled(false);
+        test3.setEnabled(false);
+        test4.setEnabled(false);
+        test5.setEnabled(false);
+
         quitterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,7 +68,21 @@ public class menu extends JFrame {
 
                 principal.removeAll();
                 principal=new hex.Panneau();
+
                 setContentPane(principal);
+                menuBar.add(test1);
+                menuBar.add(test2);
+                menuBar.add(test3);
+                menuBar.add(test4);
+                menuBar.add(test5);
+                menuBar.add(test6);
+                menuBar.add(test7);
+
+
+
+
+
+                setJMenuBar(menuBar);
                 principal.invalidate();
                 principal.revalidate();
                 principal.repaint();
