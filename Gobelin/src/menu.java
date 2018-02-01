@@ -55,6 +55,7 @@ public class menu extends JFrame {
         test4.setEnabled(false);
         test5.setEnabled(false);
 
+
         quitterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,10 +78,6 @@ public class menu extends JFrame {
                 menuBar.add(test5);
                 menuBar.add(test6);
                 menuBar.add(test7);
-
-
-
-
 
                 setJMenuBar(menuBar);
                 principal.invalidate();
