@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +26,12 @@ public class menu extends JFrame {
     JMenu test6 = new JMenu("Fin phase       ");
     JMenu test7 = new JMenu("menu");
 
+    class MenuActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Selected: " + e.getActionCommand());
+
+        }
+    }
     menu(){
 
         //nom fenetre
@@ -54,7 +62,37 @@ public class menu extends JFrame {
         test3.setEnabled(false);
         test4.setEnabled(false);
         test5.setEnabled(false);
+        test6.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent e) {
+                JOptionPane.showMessageDialog(null,"sele");
+            }
 
+            @Override
+            public void menuDeselected(MenuEvent e) {
+                JOptionPane.showMessageDialog(null,"des");
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+            }
+        });
+        test7.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent e) {
+                System.exit(0);
+            }
+
+            @Override
+            public void menuDeselected(MenuEvent e) {
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+
+            }
+        });
         quitterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,10 +116,6 @@ public class menu extends JFrame {
                 menuBar.add(test6);
                 menuBar.add(test7);
 
-
-
-
-
                 setJMenuBar(menuBar);
                 principal.invalidate();
                 principal.revalidate();
@@ -92,19 +126,19 @@ public class menu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                JOptionPane.showMessageDialog(null,"test");
+                JOptionPane.showMessageDialog(null,"Désolé ce n'est pas encore implenter dans le jeu");
             }
         });
         campagneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                JOptionPane.showMessageDialog(null,"Désolé ce n'est pas encore implenter dans le jeu");
             }
         });
         optionsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                JOptionPane.showMessageDialog(null,"Désolé ce n'est pas encore implenter dans le jeu");
             }
         });
     }
