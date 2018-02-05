@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -58,6 +60,7 @@ public class hex
         int y = j * h + (i%2) * h/2;
         Polygon poly = hex(x,y);
         g2.drawPolygon(poly);
+        g2.drawString(""+i+j, x+r, y+r+4);
     }
 
 
@@ -68,11 +71,109 @@ public class hex
         if (n < 0) {
             g2.setColor(new Color(0, 0, 0,0));
             g2.fillPolygon(hex(x,y));
+            g2.drawString("test", x+r, y+r+4);
         }
         if (n > 0) {
+            g2.setColor(new Color(19, 28, 187,200));
             g2.setColor(new Color(0, 0, 0,0));
             g2.fillPolygon(hex(x,y));
+            g2.setColor(new Color(80, 0, 65,200));
+            g2.drawString(" test1", x+r, y+4);
         }
+    }
+    public static Point pxtoHex(int mx, int my) {
+        Point p = new Point(-1,-1);
+        //mx -= BORDERS;
+       // my -= BORDERS;
+       // mx += t;
+
+        int x = (int) (mx / (s+t)); //this gives a quick value for x. It works only on odd cols and doesn't handle the triangle sections. It assumes that the hexagon is a rectangle with width s+t (=1.5*s).
+        int y = (int) ((my - (x%2)*r)/h); //this gives the row easily. It needs to be offset by h/2 (=r)if it is in an even column
+
+        /******FIX for clicking in the triangle spaces (on the left side only)*******/
+        //dx,dy are the number of pixels from the hex boundary. (ie. relative to the hex clicked in)
+        int dx = mx - x*(s+t);
+        int dy = my - y*h;
+
+        if (my - (x%2)*r < 0) return p; // prevent clicking in the open halfhexes at the top of the screen
+
+        //System.out.println("dx=" + dx + " dy=" + dy + "  > " + dx*r/t + " <");
+
+        //even columns
+        if (x%2==0) {
+            if (dy > r) {	//bottom half of hexes
+                if (dx * r /t < dy - r) {
+                    x--;
+                }
+            }
+            if (dy < r) {	//top half of hexes
+                if ((t - dx)*r/t > dy ) {
+                    x--;
+                    y--;
+                }
+            }
+        } else {  // odd columns
+            if (dy > h) {	//bottom half of hexes
+                if (dx * r/t < dy - h) {
+                    x--;
+                    y++;
+                }
+            }
+            if (dy < h) {	//top half of hexes
+                //System.out.println("" + (t- dx)*r/t +  " " + (dy - r));
+                if ((t - dx)*r/t > dy - r) {
+                    x--;
+                }
+            }
+        }
+        p.x=x;
+        p.y=y;
+        return p;
+    }
+
+
+
+    public static Point compare(int mx, int my) {
+        Point p = new Point(-1,-1);
+        int x = (int) (mx / (s+t)); //this gives a quick value for x. It works only on odd cols and doesn't handle the triangle sections. It assumes that the hexagon is a rectangle with width s+t (=1.5*s).
+        int y = (int) ((my - (x%2)*r)/h); //this gives the row easily. It needs to be offset by h/2 (=r)if it is in an even column
+
+        /******FIX for clicking in the triangle spaces (on the left side only)*******/
+        //dx,dy are the number of pixels from the hex boundary. (ie. relative to the hex clicked in)
+        int dx = mx - x*(s+t);
+        int dy = my - y*h;
+
+        if (my - (x%2)*r < 0) return p; // prevent clicking in the open halfhexes at the top of the screen
+        //even columns
+        if (x%2==0) {
+            if (dy > r) {	//bottom half of hexes
+                if (dx * r /t < dy - r) {
+                    x--;
+                }
+            }
+            if (dy < r) {	//top half of hexes
+                if ((t - dx)*r/t > dy ) {
+                    x--;
+                    y--;
+                }
+            }
+        } else {  // odd columns
+            if (dy > h) {	//bottom half of hexes
+                if (dx * r/t < dy - h) {
+                    x--;
+                    y++;
+                }
+            }
+            if (dy < h) {	//top half of hexes
+                //System.out.println("" + (t- dx)*r/t +  " " + (dy - r));
+                if ((t - dx)*r/t > dy - r) {
+                    x--;
+                }
+            }
+        }
+        p.x=x;
+        p.y=y;
+        return p;
     }
 
 
@@ -193,6 +294,8 @@ public class hex
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            MyMouseListener ml = new MyMouseListener();
+            addMouseListener(ml);
         }
 
         public void paintComponent(Graphics g)
@@ -270,6 +373,28 @@ public class hex
             g2.drawImage(leaderhumain7, 1000, 400,40, 40, null);
             g2.drawImage(leaderhumain8, 1050, 400,40, 40, null);
         }
+        class MyMouseListener extends MouseAdapter {	//inner class inside DrawingPanel
+            public void mouseClicked(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+                //mPt.x = x;
+                //mPt.y = y;
+                Point p = new Point(pxtoHex(e.getX(),e.getY()) );
+                if (p.x < 0 || p.y < 0 || p.x >= BSIZE || p.y >= BSIZE) return;
+
+                //DEBUG: colour in the hex which is supposedly the one clicked on
+                //clear the whole screen first.
+				/* for (int i=0;i<BSIZE;i++) {
+					for (int j=0;j<BSIZE;j++) {
+						board[i][j]=EMPTY;
+					}
+				} */
+
+                //What do you want to do when a hexagon is clicked?
+                board[p.x][p.y] = (int)'X';
+                repaint();
+            }
+        } //end of MyMouseListener class
     }
 
 
