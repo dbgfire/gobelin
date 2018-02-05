@@ -8,6 +8,8 @@ import java.io.IOException;
 
 
 public class menu extends JFrame {
+    //Déclaration des variables pour le menu
+
     private JButton raidButton;
     private JButton optionsButton;
     private JButton campagneButton;
@@ -15,23 +17,19 @@ public class menu extends JFrame {
     private JPanel principal;
     private JPanel Menu;
     private JButton tutorielButton;
+    int tour=0;
+    //Déclaration des variables pour le jeu
     JMenuBar menuBar = new JMenuBar();
-
-
-    JMenuItem test1 = new JMenuItem("Mouvement gobelin");
-    JMenuItem test2 = new JMenuItem ("Combat gobelin");
-    JMenuItem test3 = new JMenuItem("Mouvement humain");
-    JMenuItem test4 = new JMenuItem("Combat gobelin");
-    JMenuItem test5 = new JMenuItem("Changement de tour");
+    JMenuItem test1 = new JMenuItem("Mouvement Gobelin");
+    JMenuItem test2 = new JMenuItem ("Combat Gobelin");
+    JMenuItem test3 = new JMenuItem("Mouvement Humain");
+    JMenuItem test4 = new JMenuItem("Combat Humain");
+    JMenuItem test5 = new JMenuItem("Passage au tour "+tour);
     JMenu test6 = new JMenu("Fin phase       ");
     JMenu test7 = new JMenu("menu");
 
-    class MenuActionListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("Selected: " + e.getActionCommand());
 
-        }
-    }
+    //Constructeur
     menu(){
 
         //nom fenetre
@@ -40,16 +38,20 @@ public class menu extends JFrame {
         //this.setSize(500, 400);
         //position fenetre
         this.setLocationRelativeTo(null);
+
         //bouton quitter fenetre
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(principal);
         Menu=principal;
+
         //redimensionnable
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setUndecorated(true);
         //this.setResizable(false);
         this.setVisible(true);
         setJMenuBar(menuBar);
+
+        //Definition couleur element menu jeu
 
         menuBar.setBackground(new Color(11,201,6));
         test2.setBackground(new Color(11,201,6));
@@ -63,22 +65,58 @@ public class menu extends JFrame {
         test3.setEnabled(false);
         test4.setEnabled(false);
         test5.setEnabled(false);
+        //action bouton fin de phase
 
         test6.addMenuListener(new MenuListener() {
+            int i=1;//valeur du selecteur de phase
+
             @Override
             public void menuSelected(MenuEvent e) {
-                JOptionPane.showMessageDialog(null,"sele");
+                //
+                if(i>4) i = 0;//pour boucler a l'infini
+                    switch (i){//change la couleur en fonction de la phase
+                    case 0:
+                        test1.setBackground(new Color(255, 255, 255));
+                        test5.setBackground(new Color(11,201,6));
+                        i=i+1;
+                        break;
+                    case 1:
+                        test1.setBackground(new Color(11,201,6));
+                        test2.setBackground(new Color(255, 255, 255));
+                        i=i+1;
+                        break;
+                    case 2:
+                        test2.setBackground(new Color(11,201,6));
+                        test3.setBackground(new Color(255, 255, 255));
+                        i=i+1;
+                        break;
+                    case 3:
+                        test3.setBackground(new Color(11,201,6));
+                        test4.setBackground(new Color(255, 255, 255));
+                        i=i+1;
+                        break;
+                    case 4:
+                        test4.setBackground(new Color(11,201,6));
+                        test5.setBackground(new Color(255, 255, 255));
+                        i=i+1;
+                        tour++;
+                        test5.setText("Passage au tour "+tour);
+                        break;
+                }
+
+
             }
 
             @Override
             public void menuDeselected(MenuEvent e) {
-                JOptionPane.showMessageDialog(null,"des");
+
             }
 
             @Override
             public void menuCanceled(MenuEvent e) {
             }
         });
+        //action bouton menu
         test7.addMenuListener(new MenuListener() {
             @Override
             public void menuSelected(MenuEvent e) {
@@ -109,20 +147,23 @@ public class menu extends JFrame {
 
             }
         });
+        //action bouton quitter
         quitterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
-
+        //action bouton tuto
         tutorielButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //generation plateau de jeu
                 principal.removeAll();
                 principal=new hex.Panneau();
 
+                //L'ordre d'ajout va déterminer l'ordre d'apparition dans le menu de gauche à droite
+                //Le premier ajouté sera tout à gauche de la barre de menu et inversement pour le dernier
                 setContentPane(principal);
                 menuBar.add(test1);
                 menuBar.add(test2);
@@ -138,6 +179,7 @@ public class menu extends JFrame {
                 principal.repaint();
             }
         });
+        //action bouton raid
         raidButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -145,12 +187,14 @@ public class menu extends JFrame {
                 JOptionPane.showMessageDialog(null,"Désolé ce n'est pas encore implenter dans le jeu");
             }
         });
+        //action bouton campagne
         campagneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null,"Désolé ce n'est pas encore implenter dans le jeu");
             }
         });
+        //action bouton options
         optionsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
