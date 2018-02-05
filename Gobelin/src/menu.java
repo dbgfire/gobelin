@@ -43,6 +43,7 @@ public class menu extends JFrame {
         //bouton quitter fenetre
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(principal);
+        Menu=principal;
         //redimensionnable
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setUndecorated(true);
@@ -62,6 +63,7 @@ public class menu extends JFrame {
         test3.setEnabled(false);
         test4.setEnabled(false);
         test5.setEnabled(false);
+
         test6.addMenuListener(new MenuListener() {
             @Override
             public void menuSelected(MenuEvent e) {
@@ -81,6 +83,20 @@ public class menu extends JFrame {
             @Override
             public void menuSelected(MenuEvent e) {
                 System.exit(0);
+              /*  principal.removeAll();
+                principal=Menu;
+                remove(menuBar);
+                setContentPane(principal);
+               principal.add(raidButton);
+                principal.add(optionsButton);
+                principal.add( campagneButton);
+                principal.add( quitterButton);
+
+
+                principal.invalidate();
+                principal.revalidate();
+                principal.repaint();*/
+
             }
 
             @Override
