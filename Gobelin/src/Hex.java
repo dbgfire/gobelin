@@ -158,7 +158,7 @@ class Hex
         
         Panneau(){
             try {
-                image = ImageIO.read(new File("../../image/map2.png"));
+                image = ImageIO.read(new File("../../image/map.png"));
 
                 gobelin = ImageIO.read(new File("../../image/Pions/GobelinB_2-3-2X6.PNG"));
                 gobelin1 = ImageIO.read(new File("../../image/Pions/GobelinB_3-1X3.PNG"));
@@ -211,9 +211,7 @@ class Hex
             Graphics2D g2 = (Graphics2D)g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             super.paintComponent(g2);
-            g2.drawImage(image, 0, 0, null);
-
-
+            g2.drawImage(image, 0, 0, (this.getWidth()-30), (this.getHeight()-10), null);
             for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<LSIZE;j++) {
                     drawHex(i,j,g2);
