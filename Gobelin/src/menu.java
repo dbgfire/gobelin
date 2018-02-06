@@ -126,19 +126,19 @@ public class menu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                JOptionPane.showMessageDialog(null,"Désolé ce n'est pas encore implenter dans le jeu");
+                JOptionPane.showMessageDialog(null,"Désolé ce n'est pas encore implanté dans le jeu");
             }
         });
         campagneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"Désolé ce n'est pas encore implenter dans le jeu");
+                JOptionPane.showMessageDialog(null,"Désolé ce n'est pas encore implanté dans le jeu");
             }
         });
         optionsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"Désolé ce n'est pas encore implenter dans le jeu");
+                JOptionPane.showMessageDialog(null,"Désolé ce n'est pas encore implanté dans le jeu");
             }
         });
     }
