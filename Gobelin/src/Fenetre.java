@@ -26,7 +26,7 @@ public class Fenetre extends JFrame{
 
    public Fenetre() throws IOException {
        Toolkit tailleEcran = Toolkit.getDefaultToolkit();
-       Image icone = Toolkit.getDefaultToolkit().getImage("images/Goblin_map1.jpg");
+       Image icone = Toolkit.getDefaultToolkit().getImage("images/mapold.png");
        setIconImage(icone);
        //nom fenetre
         this.setTitle("Gobelin le jeu");
