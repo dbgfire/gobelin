@@ -13,7 +13,7 @@ public class Main {
        // Fenetre f=new Fenetre();
 
         menu me=new menu();//generation page d'acceuil
-        hex h=new hex();
+        Hex h=new Hex();
 
         leaderHumain john = new leaderHumain("John Gordon",2,2,1,true);
         leaderHumain Robert = new leaderHumain("Rombert Keith",2,4,0,true);

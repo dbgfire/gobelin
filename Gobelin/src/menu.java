@@ -158,7 +158,7 @@ public class menu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 //generation plateau de jeu
                 Menu.removeAll();
-                Menu=new hex.Panneau();
+                Menu=new Hex.Panneau();
                 Icon feuVert = new ImageIcon("images/Pions/Ash_Down.PNG");
                 JLabel feuGreen = new JLabel();
                 feuGreen.setText("cc");

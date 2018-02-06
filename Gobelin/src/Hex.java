@@ -1,46 +1,44 @@
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
+//import java.awt.event.MouseAdapter;
+//import java.awt.event.MouseEvent;
+//import java.awt.event.ActionListener;
+//import java.awt.event.MouseAdapter;
+//import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-public class hex
+class Hex
 {
-    public static int BORDERS = 260; // Bordures de chaque côté de la grille (centrage)
-    public static int s = 0;	// Longueur d'un côté
-    public static int t = 0;	// Côté le plus court de chaque triangle extérieur à l'hexagone
-    public static int r = 0;	// Rayon du cercle circonscrit à l'hexagone
-    public static int h = 0;	// Longueur totale d'un hexagone
-    public static double deg = Math.toRadians(30); // Valeur de l'angle d'un triangle rectangle extérieur à l'hexagone
-    static int EMPTY = 0;
-    static int BSIZE = 26; //board size.
-    static int HEXSIZE = 20;	//hex size in pixels
-    //int BORDERS = 15;
-    static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3; //screen size (vertical dimension).
+    private static int BORDERS = 260; // Bordures de chaque côté de la grille (centrage)
+    private static int s = 0;	// Longueur d'un côté
+    private static int t = 0;	// Côté le plus court de chaque triangle extérieur à l'hexagone
+    private static int r = 0;	// Rayon du cercle circonscrit à l'hexagone
+    private static int h = 0;	// Longueur totale d'un hexagone
+    private static double deg = Math.toRadians(30); // Valeur de l'angle d'un triangle rectangle extérieur à l'hexagone
+    static int BSIZE = 27; //Nombres d'hexagone en longueur
+    static int LSIZE = 20;	//Nombres d'hexagone en hauteur
+    //private static int[][] board = new int[BSIZE][BSIZE];
 
-    static int[][] board = new int[BSIZE][BSIZE];
-    hex(){
+    //Fonction pour calculer l'hexagone
+    Hex(){
         h = 42;
         r = h / 2;
         s = (int) (r / Math.cos(deg));
         t = (int) (r * Math.tan(deg));
-        for (int i=0;i<BSIZE;i++) {
+        /*for (int i=0;i<BSIZE;i++) {
             for (int j=0;j<LSIZE;j++) {
+                int EMPTY = 0;
                 board[i][j]=EMPTY;
             }
         }
-        board[1][0] = (int)'A';
+        board[1][0] = (int)'A';*/
     }
 
     //Fonction permettant de tracer un hexagone
-    public static Polygon hex (int x0, int y0) {
-        int y = y0; //Décalage verticale de la grille
+    private static Polygon Hexagone(int x0, int y0) {
         int x = x0 + BORDERS; //Décalage horizontale de la grille
         if (s == 0  || h == 0) {
             System.out.println("ERROR: size of hex has not been set");
@@ -48,39 +46,29 @@ public class hex
         }
         int[] cx,cy;
         cx = new int[] {x+t,x+s+t,x+s+t+t,x+s+t,x+t,x};
-        cy = new int[] {y,y,y+r,y+r+r,y+r+r,y+r};
+        cy = new int[] {y0, y0, y0 +r, y0 +r+r, y0 +r+r, y0 +r};
         return new Polygon(cx,cy,6);
     }
 
     //Tracer du texte dans la grille
-    public static void drawHex(int i, int j, Graphics2D g2) {
+    static void drawHex(int i, int j, Graphics2D g2) {
         int x = i * (s+t);
         int y = j * h + (i%2) * h/2;
-        Polygon poly = hex(x,y);
+        Polygon poly = Hexagone(x,y);
         g2.drawPolygon(poly);
         g2.drawString(""+i+j, x+r-6+BORDERS, y+r+4);
     }
 
     //Tracer de la grille hexagonale
-    public static void fillHex(int i, int j, int n, Graphics2D g2) {
+    static void fillHex(int i, int j, Graphics2D g2) {
         int x = i * (s+t);
         int y = j * h + (i%2) * h/2;
-        if (n < 0) {
-            g2.setColor(new Color(0, 0, 0,0));
-            g2.fillPolygon(hex(x,y));
-            g2.drawString("test", x+r, y+r+4);
-        }
-        if (n > 0) {
-            g2.setColor(new Color(19, 28, 187,200));
-            g2.setColor(new Color(0, 0, 0,0));
-            g2.fillPolygon(hex(x,y));
-            g2.setColor(new Color(80, 0, 65,200));
-            g2.drawString(" test1", x+r, y+4);
-        }
+        g2.setColor(new Color(0, 0, 0,0));
+        g2.fillPolygon(Hexagone(x,y));
     }
 
     //Permet de tracer les points qui forment le contour de l'hexagone
-    public static Point pxtoHex(int mx, int my) {
+    /*private static Point pxtoHex(int mx, int my) {
         Point p = new Point(-1,-1);
         int x = mx / (s+t); //Permet de tracer les points en X
         int y = (my - (x%2)*r)/h; //Permet de tracer les points en Y
@@ -115,56 +103,10 @@ public class hex
         p.x=x;
         p.y=y;
         return p;
-    }
+    }*/
 
-
-
-    public static Point compare(int mx, int my) {
-        Point p = new Point(-1,-1);
-        int x = (int) (mx / (s+t)); //this gives a quick value for x. It works only on odd cols and doesn't handle the triangle sections. It assumes that the hexagon is a rectangle with width s+t (=1.5*s).
-        int y = (int) ((my - (x%2)*r)/h); //this gives the row easily. It needs to be offset by h/2 (=r)if it is in an even column
-
-        /******FIX for clicking in the triangle spaces (on the left side only)*******/
-        //dx,dy are the number of pixels from the hex boundary. (ie. relative to the hex clicked in)
-        int dx = mx - x*(s+t);
-        int dy = my - y*h;
-
-        if (my - (x%2)*r < 0) return p; // prevent clicking in the open halfhexes at the top of the screen
-        //even columns
-        if (x%2==0) {
-            if (dy > r) {	//bottom half of hexes
-                if (dx * r /t < dy - r) {
-                    x--;
-                }
-            }
-            if (dy < r) {	//top half of hexes
-                if ((t - dx)*r/t > dy ) {
-                    x--;
-                    y--;
-                }
-            }
-        } else {  // odd columns
-            if (dy > h) {	//bottom half of hexes
-                if (dx * r/t < dy - h) {
-                    x--;
-                    y++;
-                }
-            }
-            if (dy < h) {	//top half of hexes
-                //System.out.println("" + (t- dx)*r/t +  " " + (dy - r));
-                if ((t - dx)*r/t > dy - r) {
-                    x--;
-                }
-            }
-        }
-        p.x=x;
-        p.y=y;
-        return p;
-    }
-
-
-    static class Panneau extends JPanel
-    {
+    //Le JPanel
+    static class Panneau extends JPanel {
         private BufferedImage image;
         private BufferedImage gobelin;
         private BufferedImage gobelin1;
@@ -213,30 +155,22 @@ public class hex
         private BufferedImage leaderhumain6;
         private BufferedImage leaderhumain7;
         private BufferedImage leaderhumain8;
-
-
-
-
-
-
-
+        
         Panneau(){
             try {
+                image = ImageIO.read(new File("../../image/map2.png"));
 
-                image = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\map2.png"));
-
-                gobelin = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_2-3-2X6.PNG"));
-                gobelin1 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_3-1X3.PNG"));
-                gobelin2 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_3-2X11.PNG"));
-                gobelin3 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_4-2X3.PNG"));
-                gobelin4 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinC_3-2-2X10.PNG"));
-                gobelin5 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinC_3-3X16.PNG"));
+                gobelin = ImageIO.read(new File("../../image/Pions/GobelinB_2-3-2X6.PNG"));
+                gobelin1 = ImageIO.read(new File("../../image/Pions/GobelinB_3-1X3.PNG"));
+                gobelin2 = ImageIO.read(new File("../../image/Pions/GobelinB_3-2X11.PNG"));
+                gobelin3 = ImageIO.read(new File("../../image/Pions/GobelinB_4-2X3.PNG"));
+                gobelin4 = ImageIO.read(new File("../../image/Pions/GobelinC_3-2-2X10.PNG"));
+                gobelin5 = ImageIO.read(new File("../../image/Pions/GobelinC_3-3X16.PNG"));
 
                 cheval = ImageIO.read(new File("../../image/Pions/ChevalKP_B_4-2.PNG"));
                 cheval1 = ImageIO.read(new File("../../image/Pions/ChevalRE_A_5-1.PNG"));
                 cheval2 = ImageIO.read(new File("../../image/Pions/ChevalRE_B_4-2X2.PNG"));
-
-
+                
                 infantrie = ImageIO.read(new File("../../image/Pions/InfanterieA_4-1X3.PNG"));
                 infantrie1 = ImageIO.read(new File("../../image/Pions/InfanterieB_3-2-2X5.PNG"));
                 infantrie2 = ImageIO.read(new File("../../image/Pions/InfanterieB_4-2-2X2.PNG"));
@@ -269,13 +203,11 @@ public class hex
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            addMouseListener(ml);
+            //addMouseListener(ml);
         }
 
         //Affichage
-        public void paintComponent(Graphics g)
-        {
+        public void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D)g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             super.paintComponent(g2);
@@ -289,13 +221,11 @@ public class hex
             }
             for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
-                    fillHex(i,j,board[i][j],g2);
+                    fillHex(i,j,g2);
                 }
             }
 
-            //////////PIONS/////////////////////////////////////////////////////////
-
-            //////////////////Gobelin/////////////////////////
+            //Gobelin
             g2.drawImage(gobelin, 1000, 0,40, 40, null);
             g2.drawImage(gobelin1, 1050, 0,40, 40, null);
             g2.drawImage(gobelin2, 1100, 0,40, 40, null);
@@ -348,7 +278,7 @@ public class hex
             g2.drawImage(leaderhumain7, 1000, 400,40, 40, null);
             g2.drawImage(leaderhumain8, 1050, 400,40, 40, null);
         }
-        class MyMouseListener extends MouseAdapter {	//inner class inside DrawingPanel
+        /*class MyMouseListener extends MouseAdapter {
             public void mouseClicked(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
@@ -359,16 +289,16 @@ public class hex
 
                 //DEBUG: colour in the hex which is supposedly the one clicked on
                 //clear the whole screen first.
-				/* for (int i=0;i<BSIZE;i++) {
+				for (int i=0;i<BSIZE;i++) {
 					for (int j=0;j<BSIZE;j++) {
 						board[i][j]=EMPTY;
 					}
-				} */
+				}
 
                 //What do you want to do when a hexagon is clicked?
                 board[p.x][p.y] = (int)'X';
                 repaint();
             }
-        }
+        }*/
     }
 }
