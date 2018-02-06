@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class menu extends JFrame {
     //Déclaration des variables pour le menu
-
+    private JButton icone1=new JButton();
     private JButton raidButton;
     private JButton optionsButton;
     private JButton campagneButton;
@@ -157,12 +157,20 @@ public class menu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //generation plateau de jeu
-                principal.removeAll();
-                principal=new hex.Panneau();
+                Menu.removeAll();
+                Menu=new hex.Panneau();
+                Icon feuVert = new ImageIcon("images/Pions/Ash_Down.PNG");
+                JLabel feuGreen = new JLabel();
+                feuGreen.setText("cc");
+                feuGreen.setIcon(feuVert);
+                feuGreen.setBounds(1000,500,41,41);
+
+                Menu.add(feuGreen); // Ajout à la JFrame
+
 
                 //L'ordre d'ajout va déterminer l'ordre d'apparition dans le menu de gauche à droite
                 //Le premier ajouté sera tout à gauche de la barre de menu et inversement pour le dernier
-                setContentPane(principal);
+                setContentPane(Menu);
                 menuBar.add(test1);
                 menuBar.add(test2);
                 menuBar.add(test3);
@@ -172,9 +180,9 @@ public class menu extends JFrame {
                 menuBar.add(test7);
 
                 setJMenuBar(menuBar);
-                principal.invalidate();
-                principal.revalidate();
-                principal.repaint();
+                Menu.invalidate();
+                Menu.revalidate();
+                Menu.repaint();
             }
         });
         //action bouton raid

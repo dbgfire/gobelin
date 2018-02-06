@@ -2,6 +2,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -29,7 +31,7 @@ public class Fenetre extends JFrame{
        //nom fenetre
         this.setTitle("Gobelin le jeu");
         //taille fenetre
-        //this.setSize(500, 500);
+       // this.setSize(500, 500);
        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
        this.setUndecorated(true);
         //position fenetre
@@ -38,7 +40,54 @@ public class Fenetre extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          //fenetre visible
         this.setVisible(true);
+       JPanel a=new JPanel();
 
+
+       Icon feuVert = new ImageIcon("D:\\projet\\gobelin\\Gobelin\\src\\images\\Pions\\baron+1.PNG");
+       JLabel feuGreen = new JLabel("cc");
+       feuGreen.setHorizontalTextPosition(SwingConstants.LEADING);
+       feuGreen.setBounds(2,0,41,41);
+       feuGreen.setHorizontalAlignment(SwingConstants.LEADING);
+
+       feuGreen.setBorder(BorderFactory.createLineBorder(Color.RED));
+      // feuGreen.setText("cc");
+       feuGreen.setIcon(feuVert);
+       feuGreen.addMouseListener(new MouseAdapter() {
+           @Override
+           public void mouseClicked(MouseEvent e) {
+               System.out.println("Yay you clicked me");
+           }
+
+       });
+
+      // feuGreen.setLocation(1000,500);
+      // this.getContentPane().add(feuGreen);
+       a.add(feuGreen);
+       Icon feu = new ImageIcon("D:\\projet\\gobelin\\Gobelin\\src\\images\\Pions\\baron+2.PNG");
+       JLabel feuv = new JLabel("cc");
+       feuv.setHorizontalTextPosition(SwingConstants.LEADING);
+       feuv.setBounds(500,0,41,41);
+       feuv.setHorizontalAlignment(SwingConstants.LEADING);
+
+
+       feuv.setBorder(BorderFactory.createLineBorder(Color.RED));
+       // feuGreen.setText("cc");
+       feuv.setIcon(feu);
+       feuv.addMouseListener(new MouseAdapter() {
+           @Override
+           public void mouseClicked(MouseEvent e) {
+               System.out.println("Yay you  me");
+           }
+
+       });
+        a.add(feuv);
+       this.getContentPane().add(a);
+       // feuGreen.setLocation(1000,500);
+       //this.getContentPane().add(feuv);
+       this.pack();
+
+       //this.add(feuGreen); // Ajout à la JFrame
+/*
        setJMenuBar(menuBar);
 
        menuBar.setBackground(new Color(11,201,6));
@@ -72,7 +121,7 @@ public class Fenetre extends JFrame{
 
 
 
-               this.setJMenuBar(menuBar);
+               this.setJMenuBar(menuBar);*/
                this.setVisible(true);
 
     }

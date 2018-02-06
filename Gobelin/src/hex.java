@@ -20,8 +20,7 @@ import java.awt.event.MouseEvent;
     static int EMPTY = 0;
     static int BSIZE = 26; //board size.
     static int HEXSIZE = 20;	//hex size in pixels
-    //int BORDERS = 15;
-    static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3; //screen size (vertical dimension).
+
 
     static int[][] board = new int[BSIZE][BSIZE];
     hex(){
@@ -34,7 +33,7 @@ import java.awt.event.MouseEvent;
                 board[i][j]=EMPTY;
             }
         }
-        board[1][0] = (int)'A';
+        board[10][10] = (int)'A';
     }
 
 
@@ -75,7 +74,7 @@ import java.awt.event.MouseEvent;
         }
         if (n > 0) {
             g2.setColor(new Color(19, 28, 187,200));
-            g2.setColor(new Color(0, 0, 0,0));
+            //g2.setColor(new Color(0, 0, 0,0));
             g2.fillPolygon(hex(x,y));
             g2.setColor(new Color(80, 0, 65,200));
             g2.drawString(" test1", x+r, y+4);
@@ -132,53 +131,9 @@ import java.awt.event.MouseEvent;
     }
 
 
-
-    public static Point compare(int mx, int my) {
-        Point p = new Point(-1,-1);
-        int x = (int) (mx / (s+t)); //this gives a quick value for x. It works only on odd cols and doesn't handle the triangle sections. It assumes that the hexagon is a rectangle with width s+t (=1.5*s).
-        int y = (int) ((my - (x%2)*r)/h); //this gives the row easily. It needs to be offset by h/2 (=r)if it is in an even column
-
-        /******FIX for clicking in the triangle spaces (on the left side only)*******/
-        //dx,dy are the number of pixels from the hex boundary. (ie. relative to the hex clicked in)
-        int dx = mx - x*(s+t);
-        int dy = my - y*h;
-
-        if (my - (x%2)*r < 0) return p; // prevent clicking in the open halfhexes at the top of the screen
-        //even columns
-        if (x%2==0) {
-            if (dy > r) {	//bottom half of hexes
-                if (dx * r /t < dy - r) {
-                    x--;
-                }
-            }
-            if (dy < r) {	//top half of hexes
-                if ((t - dx)*r/t > dy ) {
-                    x--;
-                    y--;
-                }
-            }
-        } else {  // odd columns
-            if (dy > h) {	//bottom half of hexes
-                if (dx * r/t < dy - h) {
-                    x--;
-                    y++;
-                }
-            }
-            if (dy < h) {	//top half of hexes
-                //System.out.println("" + (t- dx)*r/t +  " " + (dy - r));
-                if ((t - dx)*r/t > dy - r) {
-                    x--;
-                }
-            }
-        }
-        p.x=x;
-        p.y=y;
-        return p;
-    }
-
-
     static class Panneau extends JPanel
     {
+        JButton icone1=new JButton();
         private BufferedImage image;
         private BufferedImage gobelin;
         private BufferedImage gobelin1;
@@ -227,18 +182,29 @@ import java.awt.event.MouseEvent;
         private BufferedImage leaderhumain6;
         private BufferedImage leaderhumain7;
         private BufferedImage leaderhumain8;
+        int choix=0;
+        private BufferedImage test[]=new BufferedImage[10];
+        JLabel feuGreen;
+        Icon feuVert;
+        JLabel gobelin_1;
+        Icon gobelin_img;
 
 
-
+        public MyMouseListener ml = new MyMouseListener();
 
 
 
 
         Panneau(){
+
+            feuGreen = new JLabel("");
+            gobelin_1=new JLabel("");
             try {
-
+                feuVert = new ImageIcon(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_2-3-2X6.PNG");
+                gobelin_img = new ImageIcon(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_3-1X3.PNG");
                 image = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\map2.png"));
-
+                test[0]=ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_2-3-2X6.PNG"));
+                test[1]=ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\ChevalKP_B_4-2.PNG"));
                 gobelin = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_2-3-2X6.PNG"));
                 gobelin1 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_3-1X3.PNG"));
                 gobelin2 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_3-2X11.PNG"));
@@ -296,6 +262,40 @@ import java.awt.event.MouseEvent;
             }
 
             addMouseListener(ml);
+            feuGreen.setHorizontalTextPosition(SwingConstants.LEADING);
+            feuGreen.setBounds(2,0,41,41);
+            feuGreen.setHorizontalAlignment(SwingConstants.LEADING);
+
+            feuGreen.setBorder(BorderFactory.createLineBorder(Color.RED));
+            feuGreen.setIcon(feuVert);
+            feuGreen.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    System.out.println("Yay you clicked me");
+                    choix=0;
+                }
+
+            });
+            gobelin_1.setHorizontalTextPosition(SwingConstants.LEADING);
+            gobelin_1.setBounds(2,0,41,41);
+            gobelin_1.setHorizontalAlignment(SwingConstants.LEADING);
+
+            gobelin_1.setBorder(BorderFactory.createLineBorder(Color.RED));
+            gobelin_1.setIcon(gobelin_img);
+            gobelin_1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    System.out.println("Yay you ");
+                    choix=1;
+                }
+
+            });
+            this.add(gobelin_1);
+            this.add(feuGreen);
+            //this.getComponent().;
+
+
+
         }
 
         public void paintComponent(Graphics g)
@@ -303,8 +303,9 @@ import java.awt.event.MouseEvent;
             Graphics2D g2 = (Graphics2D)g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             super.paintComponent(g2);
-            g2.drawImage(image, 0, 0, null);
+            //g2.drawImage(image, 0, 0, null);
 
+            g2.drawImage(test[choix], ml.x-20, ml.y-20,40, 40, null);
 
             for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
@@ -314,14 +315,25 @@ import java.awt.event.MouseEvent;
 
             for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
-                    fillHex(i,j,board[i][j],g2);
+                   // fillHex(i,j,board[i][j],g2);
+                    fillHex(i+1,j,board[i][j],g2);
+                    fillHex(i-1,j,board[i][j],g2);
+                    fillHex(i,j+1,board[i][j],g2);
+                    fillHex(i,j-1,board[i][j],g2);
+                    fillHex(i+1,j+1,board[i][j],g2);
+                   //fillHex(i-1,j-1,board[i][j],g2);
+                    //fillHex(i+1,j-1,board[i][j],g2);
+                   fillHex(i-1,j+1,board[i][j],g2);
+
+
+
                 }
             }
 
             //////////PIONS/////////////////////////////////////////////////////////
-
+/*
             //////////////////Gobelin/////////////////////////
-            g2.drawImage(gobelin, 1000, 0,40, 40, null);
+           g2.drawImage(gobelin, 1000, 0,40, 40, null);
             g2.drawImage(gobelin1, 1050, 0,40, 40, null);
             g2.drawImage(gobelin2, 1100, 0,40, 40, null);
             g2.drawImage(gobelin3, 1150, 0,40, 40, null);
@@ -371,12 +383,13 @@ import java.awt.event.MouseEvent;
             g2.drawImage(leaderhumain5, 1250, 350,40, 40, null);
             g2.drawImage(leaderhumain6, 1300, 350,40, 40, null);
             g2.drawImage(leaderhumain7, 1000, 400,40, 40, null);
-            g2.drawImage(leaderhumain8, 1050, 400,40, 40, null);
+            g2.drawImage(leaderhumain8, 1050, 400,40, 40, null);*/
         }
         class MyMouseListener extends MouseAdapter {	//inner class inside DrawingPanel
+           int y=0,x=0;
             public void mouseClicked(MouseEvent e) {
-                int x = e.getX();
-                int y = e.getY();
+                x = e.getX();
+                y = e.getY();
                 //mPt.x = x;
                 //mPt.y = y;
                 Point p = new Point(pxtoHex(e.getX(),e.getY()) );
@@ -384,14 +397,15 @@ import java.awt.event.MouseEvent;
 
                 //DEBUG: colour in the hex which is supposedly the one clicked on
                 //clear the whole screen first.
-				/* for (int i=0;i<BSIZE;i++) {
+				 for (int i=0;i<BSIZE;i++) {
 					for (int j=0;j<BSIZE;j++) {
 						board[i][j]=EMPTY;
 					}
-				} */
+				}
 
                 //What do you want to do when a hexagon is clicked?
                 board[p.x][p.y] = (int)'X';
+
                 repaint();
             }
         } //end of MyMouseListener class
