@@ -213,7 +213,7 @@ class Hex
             super.paintComponent(g2);
             g2.drawImage(image, 0, 0, (this.getWidth()-30), (this.getHeight()-10), null);
             for (int i=0;i<BSIZE;i++) {
-                for (int j=0;j<LSIZE;j++) {
+                for (int j=0;j<BSIZE;j++) {
                     drawHex(i,j,g2);
                 }
             }
@@ -283,7 +283,7 @@ class Hex
                 //mPt.x = x;
                 //mPt.y = y;
                 Point p = new Point(pxtoHex(e.getX(),e.getY()) );
-                if (p.x < 0 || p.y < 0 || p.x >= BSIZE || p.y >= LSIZE) return;
+                if (p.x < 0 || p.y < 0 || p.x >= BSIZE || p.y >= BSIZE) return;
 
                 //DEBUG: colour in the hex which is supposedly the one clicked on
                 //clear the whole screen first.

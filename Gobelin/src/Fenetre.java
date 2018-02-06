@@ -31,7 +31,7 @@ public class Fenetre extends JFrame{
        //nom fenetre
         this.setTitle("Gobelin le jeu");
         //taille fenetre
-       // this.setSize(500, 500);
+        //this.setSize(500, 500);
        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
        this.setUndecorated(true);
         //position fenetre
@@ -40,8 +40,6 @@ public class Fenetre extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          //fenetre visible
         this.setVisible(true);
-       JPanel a=new JPanel();
-
 
        Icon feuVert = new ImageIcon("D:\\projet\\gobelin\\Gobelin\\src\\images\\Pions\\baron+1.PNG");
        JLabel feuGreen = new JLabel("cc");
@@ -62,7 +60,7 @@ public class Fenetre extends JFrame{
 
       // feuGreen.setLocation(1000,500);
       // this.getContentPane().add(feuGreen);
-       a.add(feuGreen);
+       //a.add(feuGreen);
        Icon feu = new ImageIcon("D:\\projet\\gobelin\\Gobelin\\src\\images\\Pions\\baron+2.PNG");
        JLabel feuv = new JLabel("cc");
        feuv.setHorizontalTextPosition(SwingConstants.LEADING);
@@ -80,8 +78,8 @@ public class Fenetre extends JFrame{
            }
 
        });
-        a.add(feuv);
-       this.getContentPane().add(a);
+       // a.add(feuv);
+      // this.getContentPane().add(a);
        // feuGreen.setLocation(1000,500);
        //this.getContentPane().add(feuv);
        this.pack();

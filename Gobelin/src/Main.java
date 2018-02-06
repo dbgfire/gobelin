@@ -10,7 +10,6 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
-       // Fenetre f=new Fenetre();
 
         menu me=new menu();//generation page d'acceuil
         Hex h=new Hex();
