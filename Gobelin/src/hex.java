@@ -10,8 +10,8 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class hex
-{
+    public class hex
+    {
     public static int BORDERS=50;
     public static int s=0;	// length of one side
     public static int t=0;	// short side of 30o triangle outside of each hex
@@ -63,8 +63,8 @@ public class hex
         g2.drawString(""+i+j, x+r, y+r+4);
     }
 
-
     public static void fillHex(int i, int j, int n, Graphics2D g2) {
+
 
         int x = i * (s+t);
         int y = j * h + (i%2) * h/2;
@@ -237,64 +237,64 @@ public class hex
         Panneau(){
             try {
 
-                image = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\Gobelin\\src\\images\\map2.png"));
+                image = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\map2.png"));
 
-                gobelin = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\GobelinB_2-3-2X6.PNG"));
-                gobelin1 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\GobelinB_3-1X3.PNG"));
-                gobelin2 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\GobelinB_3-2X11.PNG"));
-                gobelin3 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\GobelinB_4-2X3.PNG"));
-                gobelin4 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\GobelinC_3-2-2X10.PNG"));
-                gobelin5 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\GobelinC_3-3X16.PNG"));
+                gobelin = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_2-3-2X6.PNG"));
+                gobelin1 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_3-1X3.PNG"));
+                gobelin2 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_3-2X11.PNG"));
+                gobelin3 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_4-2X3.PNG"));
+                gobelin4 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinC_3-2-2X10.PNG"));
+                gobelin5 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinC_3-3X16.PNG"));
 
-                leadeargob1 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderGobelin_ArgBarg.PNG"));
-                leadeargob2 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderGobelin_Grimphar.PNG"));
-                leadeargob3 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderGobelin_Kasbosh.PNG"));
-                leadeargob4 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderGobelin_King.PNG"));
-                leadeargob5 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderGobelin_Marglush.PNG"));
-                leadeargob6 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderGobelin_Phinioc.PNG"));
-                leadeargob7 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderGobelin_Uglop.PNG"));
+                leadeargob1 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderGobelin_ArgBarg.PNG"));
+                leadeargob2 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderGobelin_Grimphar.PNG"));
+                leadeargob3 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderGobelin_Kasbosh.PNG"));
+                leadeargob4 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderGobelin_King.PNG"));
+                leadeargob5 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderGobelin_Marglush.PNG"));
+                leadeargob6 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderGobelin_Phinioc.PNG"));
+                leadeargob7 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderGobelin_Uglop.PNG"));
 
-                cheval = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\ChevalKP_B_4-2.PNG"));
-                cheval1 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\ChevalRE_A_5-1.PNG"));
-                cheval2 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\ChevalRE_B_4-2X2.PNG"));
-
-
-                infantrie = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieA_4-1X3.PNG"));
-                infantrie1 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieB_3-2-2X5.PNG"));
-                infantrie2 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieB_4-2-2X2.PNG"));
-                infantrie3 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieB_4-2X2.PNG"));
-                infantrie4 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieB_4-3-2X3.PNG"));
-                infantrie5 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieC_2-2-3X2.PNG"));
-                infantrie6 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieC_2-3-3X2.PNG"));
-                infantrie7 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieC_3-2-3X2.PNG"));
-                infantrie8 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieC_3-3-2X2.PNG"));
-                infantrie9 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieC_3-3-3X3.PNG"));
-                infantrie10 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieC_4-2-2X2.PNG"));
-                infantrie11 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieC_4-2-3X3.PNG"));
-                infantrie12 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieC_4-3-3X3.PNG"));
-                infantrie13 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieKP_A_4-1X2.PNG"));
-                infantrie14 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieKP_A_4-3-1.PNG"));
-                infantrie15 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieRE_A_3-3-1X2.PNG"));
-                infantrie16 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieRE_A_4-1X2.PNG"));
-                infantrie17 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\InfanterieRE_A_4-3-1X2.PNG"));
+                cheval = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\ChevalKP_B_4-2.PNG"));
+                cheval1 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\ChevalRE_A_5-1.PNG"));
+                cheval2 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\ChevalRE_B_4-2X2.PNG"));
 
 
-                leaderhumain = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderHumain_Baron.PNG"));
-                leaderhumain1 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderHumain_Count.PNG"));
-                leaderhumain2 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderHumain_FrirarSimon.PNG"));
-                leaderhumain3 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderHumain_JohnGordon.PNG"));
-                leaderhumain4 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderHumain_RobertKeith.PNG"));
-                leaderhumain5 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderHumain_SirGodfrey.PNG"));
-                leaderhumain6 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderHumain_SirHubert.PNG"));
-                leaderhumain7 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderHumain_SirRandolgh.PNG"));
-                leaderhumain8 = ImageIO.read(new File("C:\\Users\\admin1\\Desktop\\cours b3\\java\\projet java\\gobelin\\image\\Pions\\LeaderHumain_ThomasBruce.PNG"));
+                infantrie = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieA_4-1X3.PNG"));
+                infantrie1 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieB_3-2-2X5.PNG"));
+                infantrie2 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieB_4-2-2X2.PNG"));
+                infantrie3 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieB_4-2X2.PNG"));
+                infantrie4 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieB_4-3-2X3.PNG"));
+                infantrie5 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_2-2-3X2.PNG"));
+                infantrie6 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_2-3-3X2.PNG"));
+                infantrie7 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_3-2-3X2.PNG"));
+                infantrie8 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_3-3-2X2.PNG"));
+                infantrie9 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_3-3-3X3.PNG"));
+                infantrie10 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_4-2-2X2.PNG"));
+                infantrie11 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_4-2-3X3.PNG"));
+                infantrie12 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_4-3-3X3.PNG"));
+                infantrie13 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieKP_A_4-1X2.PNG"));
+                infantrie14 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieKP_A_4-3-1.PNG"));
+                infantrie15 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieRE_A_3-3-1X2.PNG"));
+                infantrie16 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieRE_A_4-1X2.PNG"));
+                infantrie17 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieRE_A_4-3-1X2.PNG"));
+
+
+                leaderhumain = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_Baron.PNG"));
+                leaderhumain1 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_Count.PNG"));
+                leaderhumain2 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_FrirarSimon.PNG"));
+                leaderhumain3 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_JohnGordon.PNG"));
+                leaderhumain4 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_RobertKeith.PNG"));
+                leaderhumain5 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_SirGodfrey.PNG"));
+                leaderhumain6 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_SirHubert.PNG"));
+                leaderhumain7 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_SirRandolgh.PNG"));
+                leaderhumain8 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_ThomasBruce.PNG"));
 
 
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            MyMouseListener ml = new MyMouseListener();
+
             addMouseListener(ml);
         }
 

@@ -34,8 +34,6 @@ public class menu extends JFrame {
 
         //nom fenetre
         this.setTitle("Gobelin le jeu");
-        //taille fenetre
-        //this.setSize(500, 400);
         //position fenetre
         this.setLocationRelativeTo(null);
 
