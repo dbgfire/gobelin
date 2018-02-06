@@ -6,14 +6,14 @@ abstract class Unity {
     public int armure;
     public int PM;
 
-    abstract void deplacement();
-    abstract void pillage();
+    abstract void deplacement();// valeur de déplacement et action
+    abstract void pillage();//option unique au gobelin
     public void attaquer(){
         System.out.println("attaque");
-    }
+    }//mecanique d'attaque
     public void attaque_distance(){
         System.out.println("attaque_distance");
-    }
+    }//mecanique d'attaque distance
 
 
 }
