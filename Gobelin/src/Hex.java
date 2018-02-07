@@ -71,7 +71,7 @@ class Hex
         }
         if (n > 0) {
            // g2.setColor(new Color(19, 28, 187,200));
-            g2.setColor(new Color(0, 0, 0,0));
+            g2.setColor(new Color(255, 0, 7, 193));
             g2.fillPolygon(Hexagone(x,y));
             g2.setColor(new Color(80, 0, 65,0));
             g2.drawString(" test1", x+BORDERS+10, y+20);
@@ -121,53 +121,6 @@ class Hex
     //Le JPanel
     static class Panneau extends JPanel {
         private BufferedImage image;
-        private BufferedImage gobelin;
-        private BufferedImage gobelin1;
-        private BufferedImage gobelin2;
-        private BufferedImage gobelin3;
-        private BufferedImage gobelin4;
-        private BufferedImage gobelin5;
-
-        private BufferedImage leadeargob1;
-        private BufferedImage leadeargob2;
-        private BufferedImage leadeargob3;
-        private BufferedImage leadeargob4;
-        private BufferedImage leadeargob5;
-        private BufferedImage leadeargob6;
-        private BufferedImage leadeargob7;
-
-        private BufferedImage cheval;
-        private BufferedImage cheval1;
-        private BufferedImage cheval2;
-
-        private BufferedImage infantrie;
-        private BufferedImage infantrie1;
-        private BufferedImage infantrie2;
-        private BufferedImage infantrie3;
-        private BufferedImage infantrie4;
-        private BufferedImage infantrie5;
-        private BufferedImage infantrie6;
-        private BufferedImage infantrie7;
-        private BufferedImage infantrie8;
-        private BufferedImage infantrie9;
-        private BufferedImage infantrie10;
-        private BufferedImage infantrie11;
-        private BufferedImage infantrie12;
-        private BufferedImage infantrie13;
-        private BufferedImage infantrie14;
-        private BufferedImage infantrie15;
-        private BufferedImage infantrie16;
-        private BufferedImage infantrie17;
-
-        private BufferedImage leaderhumain;
-        private BufferedImage leaderhumain1;
-        private BufferedImage leaderhumain2;
-        private BufferedImage leaderhumain3;
-        private BufferedImage leaderhumain4;
-        private BufferedImage leaderhumain5;
-        private BufferedImage leaderhumain6;
-        private BufferedImage leaderhumain7;
-        private BufferedImage leaderhumain8;
         public MyMouseListener ml = new MyMouseListener();
         private int choix=0;
         private BufferedImage test[]=new BufferedImage[43];
@@ -261,8 +214,11 @@ class Hex
         Icon Leader_Humain_img_8;
         JLabel Leader_Humain_9;
         Icon Leader_Humain_img_9;
-        
+        JLabel visible;
+        private boolean v=false;
+
         Panneau(){
+            visible=new JLabel("visible");
             gobelin_1=new JLabel("");
             gobelin_2=new JLabel("");
             gobelin_3=new JLabel("");
@@ -403,7 +359,7 @@ class Hex
                 test[37]=ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_SirGodfrey.PNG"));
                 test[38]=ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_SirHubert.PNG"));
                 test[39]=ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_SirRandolgh.PNG"));
-                test[40]=ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_ThomasBruce.PNG"));;
+                test[40]=ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_ThomasBruce.PNG"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -867,7 +823,19 @@ class Hex
             });
 
 
+            visible.setBounds(150,700,45,45);
+            visible.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    System.out.println("visible");
+                    if(v == true){
+                    v=false;}else
+                    {
+                        v=true;
+                    }
+                }
 
+            });
 
 
 
@@ -915,7 +883,7 @@ class Hex
             this.add(infanterie_17);
             this.add(infanterie_18);
 
-
+            this.add(visible);
 
 
 
@@ -936,10 +904,18 @@ class Hex
             }
             for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
-                    fillHex(i,j,board[i][j],g2);
+                    if(v==true){
+                    fillHex(i-1,j,board[i][j],g2);
+                    //fillHex(i+1,j+1,board[i][j],g2);
+                    fillHex(i+1,j,board[i][j],g2);
+                    fillHex(i,j+1,board[i][j],g2);
+                    fillHex(i,j-1,board[i][j],g2);
+                    fillHex(i+1,j-1,board[i][j],g2);
+                    fillHex(i-1,j-1,board[i][j],g2);}
+                    //fillHex(i,j,board[i][j],g2);
                    // fillHex(i,j,memories[i][j],g2);
-                        if(memories[i][j]!=0 &&memories[i][j] != choix )
-                    g2.drawImage(test[choix], i* (s+t), j* h + (i%2) * h/2,45, 45, null);
+                        //if(memories[i][j]!=0 &&memories[i][j] != choix )
+                   //g2.drawImage(test[choix], i* (s+t), j* h + (i%2) * h/2,45, 45, null);
                 }
             }
 
