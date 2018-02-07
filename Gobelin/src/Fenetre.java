@@ -40,6 +40,10 @@ public class Fenetre extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          //fenetre visible
         this.setVisible(true);
+       this.setLocationRelativeTo(null);
+       //On définit le layout à utiliser sur le content pane
+       this.setLayout(new BorderLayout());
+       //On ajoute le bouton au content pane de la JFrame
 
        Icon feuVert = new ImageIcon("D:\\projet\\gobelin\\Gobelin\\src\\images\\Pions\\baron+1.PNG");
        JLabel feuGreen = new JLabel("cc");
@@ -67,7 +71,7 @@ public class Fenetre extends JFrame{
        feuv.setBounds(500,0,41,41);
        feuv.setHorizontalAlignment(SwingConstants.LEADING);
 
-
+       add(feuv, BorderLayout.CENTER);
        feuv.setBorder(BorderFactory.createLineBorder(Color.RED));
        // feuGreen.setText("cc");
        feuv.setIcon(feu);

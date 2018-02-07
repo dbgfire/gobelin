@@ -48,7 +48,10 @@ public class menu extends JFrame {
         //this.setResizable(false);
         this.setVisible(true);
         setJMenuBar(menuBar);
-
+        this.setLocationRelativeTo(null);
+        //On définit le layout à utiliser sur le content pane
+        //this.setLayout(new BorderLayout());
+        //On ajoute le bouton au content pane de la JFrame
         //Definition couleur element menu jeu
 
         menuBar.setBackground(new Color(11,201,6));
@@ -159,6 +162,10 @@ public class menu extends JFrame {
                 //generation plateau de jeu
                 Menu.removeAll();
                 Menu=new Hex.Panneau();
+                setLocationRelativeTo(null);
+                //On définit le layout à utiliser sur le content pane
+                setLayout(new BorderLayout());
+                //On ajoute le bouton au content pane de la JFrame
                 Icon feuVert = new ImageIcon("images/Pions/Ash_Down.PNG");
                 JLabel feuGreen = new JLabel();
                 feuGreen.setText("cc");
@@ -166,7 +173,7 @@ public class menu extends JFrame {
                 feuGreen.setBounds(1000,500,41,41);
 
                 Menu.add(feuGreen); // Ajout à la JFrame
-
+                add(feuGreen, BorderLayout.WEST);
 
                 //L'ordre d'ajout va déterminer l'ordre d'apparition dans le menu de gauche à droite
                 //Le premier ajouté sera tout à gauche de la barre de menu et inversement pour le dernier

@@ -1,9 +1,6 @@
 import java.awt.*;
-//import java.awt.event.MouseAdapter;
-//import java.awt.event.MouseEvent;
-//import java.awt.event.ActionListener;
-//import java.awt.event.MouseAdapter;
-//import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,9 +15,11 @@ class Hex
     private static int r = 0;	// Rayon du cercle circonscrit à l'hexagone
     private static int h = 0;	// Longueur totale d'un hexagone
     private static double deg = Math.toRadians(30); // Valeur de l'angle d'un triangle rectangle extérieur à l'hexagone
-    static int BSIZE = 27; //Nombres d'hexagone en longueur
-    static int LSIZE = 20;	//Nombres d'hexagone en hauteur
-    //private static int[][] board = new int[BSIZE][BSIZE];
+    private static int BSIZE = 27; //Nombres d'hexagone en longueur
+    private static int LSIZE = 20;	//Nombres d'hexagone en hauteur
+    private static int EMPTY = 0;
+    private static int[][] board = new int[BSIZE][BSIZE];
+    private static int[][] memories = new int[BSIZE][BSIZE];
 
     //Fonction pour calculer l'hexagone
     Hex(){
@@ -28,13 +27,14 @@ class Hex
         r = h / 2;
         s = (int) (r / Math.cos(deg));
         t = (int) (r * Math.tan(deg));
-        /*for (int i=0;i<BSIZE;i++) {
+        for (int i=0;i<BSIZE;i++) {
             for (int j=0;j<LSIZE;j++) {
-                int EMPTY = 0;
+
                 board[i][j]=EMPTY;
             }
         }
-        board[1][0] = (int)'A';*/
+        board[10][10] = (int)'A';
+
     }
 
     //Fonction permettant de tracer un hexagone
@@ -50,7 +50,7 @@ class Hex
         return new Polygon(cx,cy,6);
     }
 
-    //Tracer du texte dans la grille
+    //Tracer du texte et de la grille
     static void drawHex(int i, int j, Graphics2D g2) {
         int x = i * (s+t);
         int y = j * h + (i%2) * h/2;
@@ -59,17 +59,30 @@ class Hex
         g2.drawString(""+i+j, x+r-6+BORDERS, y+r+4);
     }
 
-    //Tracer de la grille hexagonale
-    static void fillHex(int i, int j, Graphics2D g2) {
+    //contenu de la grille
+    static void fillHex(int i, int j, int n,Graphics2D g2) {
         int x = i * (s+t);
         int y = j * h + (i%2) * h/2;
-        g2.setColor(new Color(0, 0, 0,0));
-        g2.fillPolygon(Hexagone(x,y));
+
+        if (n < 0) {
+            g2.setColor(new Color(255, 24, 42, 247));
+            g2.fillPolygon(Hexagone(x+r,y));
+            g2.drawString("test", x+r, y);
+        }
+        if (n > 0) {
+           // g2.setColor(new Color(19, 28, 187,200));
+            g2.setColor(new Color(0, 0, 0,0));
+            g2.fillPolygon(Hexagone(x,y));
+            g2.setColor(new Color(80, 0, 65,0));
+            g2.drawString(" test1", x+BORDERS+10, y+20);
+        }
     }
 
     //Permet de tracer les points qui forment le contour de l'hexagone
-    /*private static Point pxtoHex(int mx, int my) {
+     static Point pxtoHex(int mx, int my) {
         Point p = new Point(-1,-1);
+
+         mx -= BORDERS;
         int x = mx / (s+t); //Permet de tracer les points en X
         int y = (my - (x%2)*r)/h; //Permet de tracer les points en Y
         int dx = mx - x*(s+t);
@@ -103,7 +116,7 @@ class Hex
         p.x=x;
         p.y=y;
         return p;
-    }*/
+    }
 
     //Le JPanel
     static class Panneau extends JPanel {
@@ -155,55 +168,103 @@ class Hex
         private BufferedImage leaderhumain6;
         private BufferedImage leaderhumain7;
         private BufferedImage leaderhumain8;
+        public MyMouseListener ml = new MyMouseListener();
+        private int choix=0;
+        private BufferedImage test[]=new BufferedImage[10];
+
+        JLabel gobelin_1;
+        Icon gobelin_img_1;
+        JLabel gobelin_2;
+        Icon gobelin_img_2;
+        JLabel gobelin_3;
+        Icon gobelin_img_3;
         
         Panneau(){
+            gobelin_1=new JLabel("");
+            gobelin_2=new JLabel("");
+            gobelin_3=new JLabel("");
             try {
-                image = ImageIO.read(new File("../../image/map.png"));
+                image = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\map.png"));
 
-                gobelin = ImageIO.read(new File("../../image/Pions/GobelinB_2-3-2X6.PNG"));
-                gobelin1 = ImageIO.read(new File("../../image/Pions/GobelinB_3-1X3.PNG"));
-                gobelin2 = ImageIO.read(new File("../../image/Pions/GobelinB_3-2X11.PNG"));
-                gobelin3 = ImageIO.read(new File("../../image/Pions/GobelinB_4-2X3.PNG"));
-                gobelin4 = ImageIO.read(new File("../../image/Pions/GobelinC_3-2-2X10.PNG"));
-                gobelin5 = ImageIO.read(new File("../../image/Pions/GobelinC_3-3X16.PNG"));
+                gobelin_img_1 = new ImageIcon(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_2-3-2X6.PNG");
+                gobelin_img_2 = new ImageIcon(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_3-1X3.PNG");
+                gobelin_img_3 = new ImageIcon(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_3-2X11.PNG");
 
-                cheval = ImageIO.read(new File("../../image/Pions/ChevalKP_B_4-2.PNG"));
-                cheval1 = ImageIO.read(new File("../../image/Pions/ChevalRE_A_5-1.PNG"));
-                cheval2 = ImageIO.read(new File("../../image/Pions/ChevalRE_B_4-2X2.PNG"));
+                test[1]=ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_2-3-2X6.PNG"));
+                test[2]=ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_3-1X3.PNG"));
+                test[3]=ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_3-2X11.PNG"));
+
+                gobelin3 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinB_4-2X3.PNG"));
+                gobelin4 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinC_3-2-2X10.PNG"));
+                gobelin5 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\GobelinC_3-3X16.PNG"));
+
+                cheval = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\ChevalKP_B_4-2.PNG"));
+                cheval1 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\ChevalRE_A_5-1.PNG"));
+                cheval2 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\ChevalRE_B_4-2X2.PNG"));
                 
-                infantrie = ImageIO.read(new File("../../image/Pions/InfanterieA_4-1X3.PNG"));
-                infantrie1 = ImageIO.read(new File("../../image/Pions/InfanterieB_3-2-2X5.PNG"));
-                infantrie2 = ImageIO.read(new File("../../image/Pions/InfanterieB_4-2-2X2.PNG"));
-                infantrie3 = ImageIO.read(new File("../../image/Pions/InfanterieB_4-2X2.PNG"));
-                infantrie4 = ImageIO.read(new File("../../image/Pions/InfanterieB_4-3-2X3.PNG"));
-                infantrie5 = ImageIO.read(new File("../../image/Pions/InfanterieC_2-2-3X2.PNG"));
-                infantrie6 = ImageIO.read(new File("../../image/Pions/InfanterieC_2-3-3X2.PNG"));
-                infantrie7 = ImageIO.read(new File("../../image/Pions/InfanterieC_3-2-3X2.PNG"));
-                infantrie8 = ImageIO.read(new File("../../image/Pions/InfanterieC_3-3-2X2.PNG"));
-                infantrie9 = ImageIO.read(new File("../../image/Pions/InfanterieC_3-3-3X3.PNG"));
-                infantrie10 = ImageIO.read(new File("../../image/Pions/InfanterieC_4-2-2X2.PNG"));
-                infantrie11 = ImageIO.read(new File("../../image/Pions/InfanterieC_4-2-3X3.PNG"));
-                infantrie12 = ImageIO.read(new File("../../image/Pions/InfanterieC_4-3-3X3.PNG"));
-                infantrie13 = ImageIO.read(new File("../../image/Pions/InfanterieKP_A_4-1X2.PNG"));
-                infantrie14 = ImageIO.read(new File("../../image/Pions/InfanterieKP_A_4-3-1.PNG"));
-                infantrie15 = ImageIO.read(new File("../../image/Pions/InfanterieRE_A_3-3-1X2.PNG"));
-                infantrie16 = ImageIO.read(new File("../../image/Pions/InfanterieRE_A_4-1X2.PNG"));
-                infantrie17 = ImageIO.read(new File("../../image/Pions/InfanterieRE_A_4-3-1X2.PNG"));
+                infantrie = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieA_4-1X3.PNG"));
+                infantrie1 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieB_3-2-2X5.PNG"));
+                infantrie2 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieB_4-2-2X2.PNG"));
+                infantrie3 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieB_4-2X2.PNG"));
+                infantrie4 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieB_4-3-2X3.PNG"));
+                infantrie5 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_2-2-3X2.PNG"));
+                infantrie6 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_2-3-3X2.PNG"));
+                infantrie7 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_3-2-3X2.PNG"));
+                infantrie8 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_3-3-2X2.PNG"));
+                infantrie9 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_3-3-3X3.PNG"));
+                infantrie10 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_4-2-2X2.PNG"));
+                infantrie11 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_4-2-3X3.PNG"));
+                infantrie12 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieC_4-3-3X3.PNG"));
+                infantrie13 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieKP_A_4-1X2.PNG"));
+                infantrie14 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieKP_A_4-3-1.PNG"));
+                infantrie15 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieRE_A_3-3-1X2.PNG"));
+                infantrie16 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieRE_A_4-1X2.PNG"));
+                infantrie17 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\InfanterieRE_A_4-3-1X2.PNG"));
 
 
-                leaderhumain = ImageIO.read(new File("../../image/Pions/LeaderHumain_Baron.PNG"));
-                leaderhumain1 = ImageIO.read(new File("../../image/Pions/LeaderHumain_Count.PNG"));
-                leaderhumain2 = ImageIO.read(new File("../../image/Pions/LeaderHumain_FrirarSimon.PNG"));
-                leaderhumain3 = ImageIO.read(new File("../../image/Pions/LeaderHumain_JohnGordon.PNG"));
-                leaderhumain4 = ImageIO.read(new File("../../image/Pions/LeaderHumain_RobertKeith.PNG"));
-                leaderhumain5 = ImageIO.read(new File("../../image/Pions/LeaderHumain_SirGodfrey.PNG"));
-                leaderhumain6 = ImageIO.read(new File("../../image/Pions/LeaderHumain_SirHubert.PNG"));
-                leaderhumain7 = ImageIO.read(new File("../../image/Pions/LeaderHumain_SirRandolgh.PNG"));
-                leaderhumain8 = ImageIO.read(new File("../../image/Pions/LeaderHumain_ThomasBruce.PNG"));
+                leaderhumain = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_Baron.PNG"));
+                leaderhumain1 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_Count.PNG"));
+                leaderhumain2 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_FrirarSimon.PNG"));
+                leaderhumain3 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_JohnGordon.PNG"));
+                leaderhumain4 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_RobertKeith.PNG"));
+                leaderhumain5 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_SirGodfrey.PNG"));
+                leaderhumain6 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_SirHubert.PNG"));
+                leaderhumain7 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_SirRandolgh.PNG"));
+                leaderhumain8 = ImageIO.read(new File(System.getProperty("user.dir")+"\\src\\images\\Pions\\LeaderHumain_ThomasBruce.PNG"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //addMouseListener(ml);
+
+            addMouseListener(ml);
+
+            this.setLayout(new BorderLayout());
+
+            gobelin_1.setBounds(2,0,50,50);
+            gobelin_1.setIcon(gobelin_img_1);
+            gobelin_1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    System.out.println("Yay you ");
+                    choix=1;
+
+                }
+
+            });
+            gobelin_2.setBounds(55,0,50,50);
+            gobelin_2.setIcon(gobelin_img_2);
+            gobelin_2.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    System.out.println("Yay");
+
+                    choix=2;
+                }
+
+            });
+            this.add(gobelin_1);
+            this.add(gobelin_2);
+
+
         }
 
         //Affichage
@@ -212,6 +273,8 @@ class Hex
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             super.paintComponent(g2);
             g2.drawImage(image, 0, 0, (this.getWidth()-30), (this.getHeight()-10), null);
+            g2.drawImage(test[choix], ml.x-20, ml.y-20,40, 40, null);
+//                    memories[ml.x][ml.y]=choix;
             for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
                     drawHex(i,j,g2);
@@ -219,84 +282,42 @@ class Hex
             }
             for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
-                    fillHex(i,j,g2);
+                    fillHex(i,j,board[i][j],g2);
+                   // fillHex(i,j,memories[i][j],g2);
+                        if(memories[i][j]!=0 &&memories[i][j] != choix )
+                    g2.drawImage(test[choix], i* (s+t), j* h + (i%2) * h/2,40, 40, null);
                 }
             }
 
-            //Gobelin
-            g2.drawImage(gobelin, 1000, 0,40, 40, null);
-            g2.drawImage(gobelin1, 1050, 0,40, 40, null);
-            g2.drawImage(gobelin2, 1100, 0,40, 40, null);
-            g2.drawImage(gobelin3, 1150, 0,40, 40, null);
-            g2.drawImage(gobelin4, 1200, 0,40, 40, null);
-            g2.drawImage(gobelin5, 1250, 0, 40, 40,null);
-
-            //LeaderGobelin
-            g2.drawImage(leadeargob1, 1000, 50,40, 40, null);
-            g2.drawImage(leadeargob2, 1050, 50,40, 40, null);
-            g2.drawImage(leadeargob3, 1100, 50,40, 40, null);
-            g2.drawImage(leadeargob4, 1150, 50,40, 40, null);
-            g2.drawImage(leadeargob5, 1200, 50,40, 40, null);
-            g2.drawImage(leadeargob6, 1250, 50,40, 40, null);
-            g2.drawImage(leadeargob7, 1300, 50,40, 40, null);
-
-            //ChevalRe
-            g2.drawImage(cheval, 1000, 150,40, 40, null);
-            g2.drawImage(cheval1, 1050, 150,40, 40, null);
-            g2.drawImage(cheval2, 1100, 150, 40, 40,null);
-
-            //Infanterie
-            g2.drawImage(infantrie, 1000, 200,40, 40, null);
-            g2.drawImage(infantrie1, 1050, 200,40, 40, null);
-            g2.drawImage(infantrie2, 1100, 200,40, 40, null);
-            g2.drawImage(infantrie3, 1150, 200,40, 40, null);
-            g2.drawImage(infantrie4, 1200, 200,40, 40, null);
-            g2.drawImage(infantrie5, 1250, 200,40, 40, null);
-            g2.drawImage(infantrie6, 1300, 200,40, 40, null);
-            g2.drawImage(infantrie7, 1000, 250,40, 40, null);
-            g2.drawImage(infantrie8, 1050, 250,40, 40, null);
-            g2.drawImage(infantrie9, 1100, 250,40, 40, null);
-            g2.drawImage(infantrie10, 1150, 250,40, 40, null);
-            g2.drawImage(infantrie11, 1200, 250,40, 40, null);
-            g2.drawImage(infantrie12, 1250, 250,40, 40, null);
-            g2.drawImage(infantrie13, 1300, 250,40, 40, null);
-            g2.drawImage(infantrie14, 1000, 300,40, 40, null);
-            g2.drawImage(infantrie15, 1050, 300,40, 40, null);
-            g2.drawImage(infantrie16, 1100, 300,40, 40, null);
-            g2.drawImage(infantrie17, 1150, 300,40, 40, null);
-
-            //LeaderHumain
-            g2.drawImage(leaderhumain, 1000, 350,40, 40, null);
-            g2.drawImage(leaderhumain1, 1050, 350,40, 40, null);
-            g2.drawImage(leaderhumain2, 1100, 350,40, 40, null);
-            g2.drawImage(leaderhumain3, 1150, 350,40, 40, null);
-            g2.drawImage(leaderhumain4, 1200,350 ,40, 40, null);
-            g2.drawImage(leaderhumain5, 1250, 350,40, 40, null);
-            g2.drawImage(leaderhumain6, 1300, 350,40, 40, null);
-            g2.drawImage(leaderhumain7, 1000, 400,40, 40, null);
-            g2.drawImage(leaderhumain8, 1050, 400,40, 40, null);
         }
-        /*class MyMouseListener extends MouseAdapter {
+        class MyMouseListener extends MouseAdapter {
+            int x=10,y=10;
             public void mouseClicked(MouseEvent e) {
-                int x = e.getX();
-                int y = e.getY();
+                x = e.getX();
+                y = e.getY();
                 //mPt.x = x;
                 //mPt.y = y;
-                Point p = new Point(pxtoHex(e.getX(),e.getY()) );
+                Point p = new Point(pxtoHex(e.getX(), e.getY()));
                 if (p.x < 0 || p.y < 0 || p.x >= BSIZE || p.y >= BSIZE) return;
 
                 //DEBUG: colour in the hex which is supposedly the one clicked on
                 //clear the whole screen first.
-				for (int i=0;i<BSIZE;i++) {
-					for (int j=0;j<BSIZE;j++) {
-						board[i][j]=EMPTY;
-					}
-				}
+                for (int i = 0; i < BSIZE; i++) {
+                    for (int j = 0; j < BSIZE; j++) {
+                        board[i][j] = EMPTY;
+                        if (memories[i][j] != choix && memories[i][j]!=0){
+                            //board[i][j] = choix;
+                            memories[i][j] = choix;
+                        }
+                    }
+                }
+
+
 
                 //What do you want to do when a hexagon is clicked?
                 board[p.x][p.y] = (int)'X';
                 repaint();
             }
-        }*/
+        }
     }
 }
