@@ -1,1 +1,1 @@
-Le projet de jeu de plateau issue du jeu de societe goblin.
+Projet de transitionsd'un jeu de plateau en version numérique.
